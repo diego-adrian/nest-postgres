@@ -1,5 +1,5 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./user.entity";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity()
 export class Profile {
@@ -12,12 +12,12 @@ export class Profile {
   @Column({ nullable: true, name: 'last_name' })
   lastName: string;
 
-  @Column({ type: 'text'})
+  @Column({ type: 'text' })
   email: string;
 
   @Column()
   age: number;
 
-  @OneToOne(() => User, user => user.profile)
+  @OneToOne(() => User, (user) => user.profile)
   user: User;
 }

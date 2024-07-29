@@ -20,7 +20,7 @@ import { CategoriesModule } from './categories/categories.module';
     }),
     UsersModule,
     CommentsModule,
-    CategoriesModule
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],

@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Comment } from "../../comments/entities/comment.entity";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Comment } from '../../comments/entities/comment.entity';
 
 @Entity()
 export class Category {
@@ -9,6 +9,6 @@ export class Category {
   @Column({ type: 'text', nullable: false, unique: true })
   name: string;
 
-  @ManyToMany(() => Comment, comment => comment.categories)
+  @ManyToMany(() => Comment, (comment) => comment.categories)
   comments: Comment[];
 }
