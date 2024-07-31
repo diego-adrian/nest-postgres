@@ -9,9 +9,9 @@ import { CategoriesModule } from './categories/categories.module';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: 'mongodb',
       host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
+      port: parseInt(process.env.DATABASE_PORT, 10) || 27017,
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
@@ -19,8 +19,8 @@ import { CategoriesModule } from './categories/categories.module';
       synchronize: true,
     }),
     UsersModule,
-    CommentsModule,
-    CategoriesModule
+    // CommentsModule,
+    // CategoriesModule
   ],
   controllers: [],
   providers: [],

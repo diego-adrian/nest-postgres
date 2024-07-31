@@ -18,6 +18,6 @@ export class Profile {
   @Column()
   age: number;
 
-  @OneToOne(() => User, user => user.profile)
-  user: User;
+  // @OneToOne(() => User, user => user.profile)
+  // user: User;
 }

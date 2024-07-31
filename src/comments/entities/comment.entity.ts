@@ -10,9 +10,9 @@ export class Comment {
   @Column({ type: 'text', nullable: false })
   comment: string;
 
-  @ManyToOne(() => User, user => user.comments)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  // @ManyToOne(() => User, user => user.comments)
+  // @JoinColumn({ name: 'user_id' })
+  // user: User;
 
   @ManyToMany(() => Category, category => category.comments)
   @JoinTable({ name: 'comment_category' })

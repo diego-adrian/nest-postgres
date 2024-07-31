@@ -1,11 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, ObjectIdColumn } from "typeorm";
 import { Profile } from "./profile.entity";
 import { Comment } from "../../comments/entities/comment.entity";
+import { ObjectId } from "mongodb";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ObjectIdColumn()
+  id: ObjectId;
 
   @Column({ type: 'text', unique: true })
   username: string;
@@ -16,10 +17,10 @@ export class User {
   @Column({ default: false })
   activo: boolean;
 
-  @OneToOne(() => Profile, profile => profile.user, { cascade: true })
-  @JoinColumn({ name: 'profile_id'})
-  profile: Profile;
+  // @OneToOne(() => Profile, profile => profile.user, { cascade: true })
+  // @JoinColumn({ name: 'profile_id'})
+  // profile: Profile;
 
-  @OneToMany(() => Comment, comment => comment.user)
-  comments: Comment[];
+  // @OneToMany(() => Comment, comment => comment.user)
+  // comments: Comment[];
 }

@@ -15,8 +15,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  getById(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  getById(@Param('id', ParseUUIDPipe) id) {
+    return this.usersService.findOne(id);
   }
 
   @Post()
@@ -25,13 +25,13 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string){
-    return this.usersService.delete(+id);
+  async delete(@Param('id', ParseUUIDPipe) id){
+    return this.usersService.delete(id);
   }
 
   @Patch(':id')
   async update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id,
     @Body() body: UpdateUserDto){
     return this.usersService.update(id, body);
   }
