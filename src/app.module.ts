@@ -4,6 +4,10 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentsModule } from './comments/comments.module';
 import { CategoriesModule } from './categories/categories.module';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth/guard/auth.guard';
+import { RolesGuard } from './auth/guard/roles.guard';
 
 @Module({
   imports: [
@@ -21,8 +25,18 @@ import { CategoriesModule } from './categories/categories.module';
     UsersModule,
     CommentsModule,
     CategoriesModule,
+    AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

@@ -8,21 +8,27 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { Roles } from '../auth/decorators/role.decorator';
+import { Role } from './constants/user.enum';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   getAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @Roles(Role.USER)
   getById(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }

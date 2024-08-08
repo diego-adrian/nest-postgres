@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { Profile } from './entities/profile.entity';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { hash, compare} from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -20,6 +21,25 @@ export class UsersService {
     return this.userRepository.find({});
   }
 
+  async find(username: string, password: string) {
+    const user = await this.userRepository.findOne({
+      where: { username },
+      select: ['id', 'username', 'password', 'activo', 'roles'],
+    });
+
+    if (!user) {
+      throw new NotFoundException(`Usuario con username ${username} no encontrado`);
+    }
+
+    const isOK = await this.passwordCompare(password, user.password);
+
+    if (!isOK) {
+      throw new NotFoundException(`Password incorrecto`);
+    }
+
+    return user;
+  }
+
   async findOne(id: number) {
     const user = await this.userRepository.findOne({
       where: { id },
@@ -32,6 +52,14 @@ export class UsersService {
     return user;
   }
 
+  async passwordHash(password: string) {
+    return hash(password, 10);
+  }
+
+  async passwordCompare(passwordPayload: string, passwordDB: string) {
+    return compare(passwordPayload, passwordDB);
+  }
+
   async create(payload: CreateUserDto) {
     const newProfile = new Profile();
     newProfile.name = payload.name;
@@ -42,7 +70,7 @@ export class UsersService {
 
     const newUser = new User();
     newUser.username = payload.username;
-    newUser.password = payload.password;
+    newUser.password = await this.passwordHash(payload.password);
     newUser.activo = true;
     newUser.profile = newProfile;
     const userCreated = await this.userRepository.save(newUser);
