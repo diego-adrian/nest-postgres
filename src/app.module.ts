@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guard/auth.guard';
 import { RolesGuard } from './auth/guard/roles.guard';
+import { ZoomModule } from './zoom/zoom.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { RolesGuard } from './auth/guard/roles.guard';
     CommentsModule,
     CategoriesModule,
     AuthModule,
+    ZoomModule,
   ],
   controllers: [],
   providers: [
